@@ -1,0 +1,43 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+public class Introwait : MonoBehaviour
+{
+    public int waitTime;
+    public float totalTime = 10;
+    public GameObject gameObject;
+    public Animator anim;
+    void Start()
+    {
+        StartCoroutine(WaitForLevel());
+    }
+
+    IEnumerator WaitForLevel()
+    {
+        yield return new WaitForSeconds(waitTime);
+        SceneManager.LoadScene(1);
+    }
+    // Update is called once per frame
+    public void Scip()
+    {
+        SceneManager.LoadScene(1);
+    }
+    public void Awake()
+    {
+        anim = gameObject.GetComponent<Animator>();
+    }
+    void Update()
+    {
+        if (totalTime > 0)
+        {
+            //Subtract elapsed time every frame
+            totalTime -= Time.deltaTime;
+        }
+        else
+        {
+            gameObject.SetActive(true);
+            anim.SetBool("IsOpen", true);
+        }
+    }
+}
